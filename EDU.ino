@@ -1,21 +1,22 @@
-#define PWMB 3
-#define BIN2 4
-#define BIN1 5
+#define PWMB 9
+#define BIN2 8
+#define BIN1 7
 #define STBY 6
-#define AIN1 7
-#define AIN2 8
-#define PWMA 9
+#define AIN1 5
+#define AIN2 4
+#define PWMA 3
+#define NOTE_CS4  277
 
-float kd = 0.2;
-float kp = 0.1;
+float kd = 0.5;
+float kp = 0.05;
 int Speed = 100;
 int max_speed = 255;
 int min_speed = 0;
 int s_max[6]; int s_min[6]; int s_threshold[6];
 int sd[6]; int s[6];
 int Move = 0;
-int L_med = (max_speed + min_speed) / 2;
-int R_med = (max_speed + min_speed) / 2;
+int L_med = (max_speed + min_speed) / 2 +30;
+int R_med = (max_speed + min_speed) / 2 +30;
 int data = 0;
 int mode = 0;
 int pos, opt, last_error, error, R, L = 0;
@@ -33,8 +34,16 @@ void setup() {
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(PWMA, OUTPUT);
+//  tone(10, NOTE_C4,50);  
+//  tone(10, NOTE_C4,50); 
+  buzzer(3,100);
+do{
+  digitalWrite(STBY, 1);
+car();
 
+}
   while (digitalRead(2) != 0);
+  digitalWrite(STBY, 0);
   buzzer(1);
   for (int i = 0; i < 6; i++) {
     s_max[i] = analogRead(i);
@@ -73,10 +82,20 @@ void setup() {
 }
 void loop() {
   
- car();
+ line(false);//true robot will follow the white line
+             //false robot will follow the black line
 
  
 
+}
+void buzzer(int times,int del){
+for(int i=0;i<times;i++){
+  tone(10, NOTE_CS4,100);
+  delay(del);
+  noTone(10);
+  delay(del);
+}
+  
 }
 void line(bool color) {
   if (color == true) {
@@ -100,7 +119,11 @@ void line(bool color) {
     }
   }
 
+   if (sd[0] == 0 && sd[1] == 0 && sd[2] == 0 && sd[3] == 0 && sd[4] == 0 && sd[5] == 0) {
+    error = 2500;
+  } else {
   pos = (0 * sd[0] + 1000 * sd[1] + 2000 * sd[2] + 3000 * sd[3] + 4000 * sd[4] + 5000 * sd[5]) / (sd[0] + sd[1] + sd[2] + sd[3] + sd[4] + sd[5]);
+  }
   error = pos - 2500;
   //  Serial.println(error);
   opt = kp * error + kd * (last_error - error);
