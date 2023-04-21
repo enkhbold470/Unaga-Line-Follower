@@ -5,7 +5,7 @@ This repository contains the source code and documentation for the Unaga Line Fo
 ## Getting Started
 
 To build and program your own Unaga Line Follower Robot, you will need the following components:
-![Alt Text](https://github.com/enkhbold470/Unaga-Line-Follower/blob/master/images/unaga%20(1).jpg)
+![Alt Text](https://github.com/enkhbold470/Unaga-Line-Follower/blob/master/images/unaga%20(4).jpg)
 
 - Arduino board (Uno or Nano)
 - Motor driver (L293D or similar)
@@ -15,6 +15,8 @@ To build and program your own Unaga Line Follower Robot, you will need the follo
 - Battery holder
 - Jumper wires
 - Soldering iron and solder
+
+![Alt Text](https://github.com/enkhbold470/Unaga-Line-Follower/blob/master/images/unaga%20(8).jpg)
 
 Once you have assembled the hardware, you can download the source code from this repository and upload it to your Arduino board using the Arduino IDE. The code is written in C++ and uses the Arduino libraries for motor control and sensor readings.
 
